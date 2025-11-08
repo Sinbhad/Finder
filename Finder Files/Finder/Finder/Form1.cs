@@ -380,9 +380,10 @@ namespace Finder
 
         private void btnRequest_Click(object sender, EventArgs e)
         {
-            // Define the file path where you want to save the issues
-            string txtFilePath = @"C:\Users\lildi\Downloads\issues.txt";
-
+            // Update this path
+            string txtFilePath = @"C:\Now\This\One\:)\issues.txt";// Update this path
+            // Update this path
+            
             // Get the issue text from the TextBox
             string issue = txtIssues.Text.Trim();
 
@@ -485,3 +486,4 @@ namespace Finder
        
     }
 }
+
