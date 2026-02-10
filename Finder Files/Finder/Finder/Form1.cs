@@ -27,60 +27,50 @@ namespace Finder
 
             string searchValue = txtSearch.Text.Trim();
 
-            // Remove leading zeros from the search value
+           
             searchValue = searchValue.TrimStart('0');
 
             if (File.Exists(filePath))
             {
                 using (var workbook = new XLWorkbook(filePath))
                 {
-                    var worksheet = workbook.Worksheet(1); // Get the first worksheet
+                    var worksheet = workbook.Worksheet(1);
                     bool itemFound = false;
 
-                    // Search through rows
+                    
                     foreach (var row in worksheet.RowsUsed())
                     {
-                        //assign upc and name values
                         var upc = row.Cell(1).GetString().Trim(); 
                         var productName = row.Cell(2).GetString().Trim();
-
-                        // Remove leading zeros from the UPC for comparison
                         upc = upc.TrimStart('0');
-
-                        // Debug output
                         Console.WriteLine($"Checking UPC: '{upc}' against '{searchValue}'");
                         Console.WriteLine($"Checking Product Name: '{productName}' against '{searchValue}'");
 
-                        // Check for UPC match
                         if (upc.Equals(searchValue, StringComparison.OrdinalIgnoreCase))
                         {
-                            // Populate labels with values from the third, fourth, and fifth columns
-                            lblShelfChar.Text = row.Cell(3).GetString().ToUpper(); // Location
-                            lblRowInt.Text = row.Cell(4).GetString(); // Category
-                            lblColumnInt.Text = row.Cell(5).GetString(); // Price
+                            lblShelfChar.Text = row.Cell(3).GetString().ToUpper();
+                            lblRowInt.Text = row.Cell(4).GetString(); 
+                            lblColumnInt.Text = row.Cell(5).GetString();
 
                             itemFound = true;
-                            break; // Exit loop after finding the first match
+                            break;
                         }
-
-                        // If the product name is not empty, check for a match
                         if (!string.IsNullOrEmpty(productName) &&
                             productName.Equals(searchValue, StringComparison.OrdinalIgnoreCase))
                         {
-                            // Populate labels with values from the third, fourth, and fifth columns
-                            lblShelfChar.Text = row.Cell(3).GetString(); // Location
-                            lblRowInt.Text = row.Cell(4).GetString(); // Category
-                            lblColumnInt.Text = row.Cell(5).GetString(); // Price
+                            lblShelfChar.Text = row.Cell(3).GetString(); 
+                            lblRowInt.Text = row.Cell(4).GetString(); 
+                            lblColumnInt.Text = row.Cell(5).GetString();
 
                             itemFound = true;
-                            break; // Exit loop after finding the first match
+                            break; 
                         }
                     }
 
                    
                     string shelfValue = lblShelfChar.Text.Trim().ToUpper();
                     string rowValue = lblRowInt.Text.Trim();
-                    string combinedValue = $"{shelfValue}:{rowValue}"; // Combine for switch case
+                    string combinedValue = $"{shelfValue}:{rowValue}"; 
 
                     switch (combinedValue)
                     {
@@ -365,7 +355,6 @@ namespace Finder
                     if (!itemFound)
                     {
                         MessageBox.Show("Item not found.");
-                        // Clear labels if item is not found
                         lblShelfChar.Text = "";
                         lblRowInt.Text = "";
                         lblColumnInt.Text = "";
@@ -383,27 +372,22 @@ namespace Finder
             // Update this path
             string txtFilePath = @"C:\Now\This\One\:)\issues.txt";// Update this path
             // Update this path
-            
-            // Get the issue text from the TextBox
             string issue = txtIssues.Text.Trim();
-
-            // Check if the issue text is empty
             if (string.IsNullOrEmpty(issue))
             {
                 MessageBox.Show("Please enter an issue.");
-                return; // Exit if the issue is empty
+                return; 
             }
 
             try
             {
-                // Append the issue to the text file
-                using (StreamWriter writer = new StreamWriter(txtFilePath, true)) // Append mode
+                using (StreamWriter writer = new StreamWriter(txtFilePath, true)) 
                 {
-                    writer.WriteLine($"{DateTime.Now}: {issue}"); // Save with a timestamp
+                    writer.WriteLine($"{DateTime.Now}: {issue}"); 
                 }
 
                 MessageBox.Show("Your issue has been recorded.");
-                txtIssues.Clear(); // Clear the TextBox after saving
+                txtIssues.Clear(); 
             }
             catch (Exception ex)
             {
@@ -486,4 +470,5 @@ namespace Finder
        
     }
 }
+
 
